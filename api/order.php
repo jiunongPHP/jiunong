@@ -292,12 +292,12 @@ class Order
     }
 
     /**
-     * 获取订单信息
+     * 按照用户id和订单分类获取多个订单
      */
     public function get_order_lists(Request $request){
-        $user = $request->input('user') ? $request->input('user') : 0;
-        $type = $request->input('type') ? $request->input('type') : -1; //默认为-1 所有类型订单
-
+        $user = $request->input('user') ? intval($request->input('user')) : 0;
+        $type = $request->input('type') ? intval($request->input('type')) : -1; //默认为-1 所有类型订单
+        
         //订单状态 0：待支付 1：已支付待发货 2:已发货，待收货 3：已收货,待评价 4:已评价完成'  shipping_status发货  pay_status支付
         if($type>=0){
             $catQuery = '=';
@@ -311,7 +311,6 @@ class Order
                 ->where('user_id', $user)
                 ->select('order_id','order_sn','order_amount')
                 ->get();
-            //print_r($goods);
             if ($orders) {
                 $allData = [];
                 foreach ($orders as $order) {
@@ -326,8 +325,6 @@ class Order
                             $goods2nums[$value->goods_id] = $value->goods_number;
                             $ids[] = $value->goods_id;
                         }
-                        var_dump($goods2nums);
-                        var_dump($ids);
                         $goodsLists = DB::table('goods')
                             ->where('goods_id', $order->order_id)
                             ->select('goods_id', 'goods_name', 'shop_price', 'keywords', 'goods_img')
@@ -342,7 +339,6 @@ class Order
                             $data['goods_name'] = $goods->goods_name;
                             $data['keywords'] = $goods->keywords;
                             $data['goods_number'] = $goods2nums[$goods->goods_id];
-
                             $datas[] = $data;
                         }
                     }else{
@@ -352,7 +348,6 @@ class Order
                     }
 
                     $allData[] = $datas;
-
                     $res['errcode'] = '200';
                     $res['message'] = '获取订单信息成功！';
                     $res['data']    = $allData;
