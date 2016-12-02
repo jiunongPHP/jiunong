@@ -6,6 +6,7 @@ include __DIR__ . '/sign.php';
 use Illuminate\Database\Capsule\Manager as DB;
 //输入过滤器
 use Illuminate\Http\Request;
+//use Redis;
 
 
 class Activities extends Sign{
