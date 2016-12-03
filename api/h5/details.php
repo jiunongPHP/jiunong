@@ -12,12 +12,13 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 switch($mod){
     case 'activity':
         $data = activity($id);
-        $view = '';
+        $view = 'wine1.html';
         break;
     case 'inviteRegister':
         $uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0;
         $view = 'yqzc.html';
         $data = inviteRegister($uid);
+        break;
 }
 
 
@@ -30,10 +31,8 @@ $smarty->display($view);
 /**
  *  活动详情H5
  */
-function activity($id)
-{
-    $oneInfo = [];
-    //获取数据
+function activity($id){
+    $oneInfo = DB::table('activities')->where('id',$id)->first();
     return $oneInfo;
 }
 
