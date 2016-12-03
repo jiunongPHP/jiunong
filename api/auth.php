@@ -22,8 +22,6 @@ class Auth{
         $res = ['errcode'=>1001,'message'=>'参数错误！'];
         if(isset($_REQUEST['device'])){
             $this->dev = trim($_REQUEST['device']);
-        }else{
-            $this->response($res);
         }
         //连接redis
         $redis = new Redis();
@@ -138,6 +136,7 @@ class Auth{
         $profession = $request->input('profession'); //职业
         $openid = $request->input('openid');
         $accessToken = $request->input('accessToken');
+        $autoLogin = $request->input('autoLogin');
         /*
         $captcha = $request->input('captcha');
         //检查验证码
@@ -216,7 +215,8 @@ class Auth{
         if(!$res){
             $this->response(['errcode'=>2,'message'=>'注册失败','data'=>$this->obj ]);
         }
-        //$this->response(['errcode'=>200,'message'=>'注册成功','data'=>$this->obj ]);
+        if($autoLogin == 'n')
+            $this->response(['errcode'=>200,'message'=>'注册成功','data'=>$this->obj ]);
         $this->login($request); //注册后直接登录
     }
 
