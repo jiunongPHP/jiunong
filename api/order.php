@@ -178,28 +178,25 @@ class Order
     /**
      * 添加订单信息
      */
-    public function addOrder(Request $request){
+    public function add_order(Request $request){
         $goods_ids  = $request->input('id') ? $request->input('id') : '';
         $goods_nums = $request->input('num') ? $request->input('num') : '';
         $user       = $request->input('user') ? $request->input('user') : 0;
-        $addressId  = $request->input('addressId') ? $request->input('addressId') : 0;
+        $addressId  = $request->input('addressid') ? $request->input('addressid') : 0;
         $money      = $request->input('money') ? $request->input('money') : 0;
 
         $idarrs     = explode(',',$goods_ids);
         $noarrs     = explode(',',$goods_nums);
-        //var_dump($idarrs);
-        $idcounts   = count($idarrs);
-        $nocounts   = count($noarrs);
-
+        
         //订单编号
         $order_sn   = $this->buildOrderNo('JN');
-
-        if ($goods_ids != '' && $goods_nums != '' && $idcounts == $nocounts && $user > 0 && $addressId>0 && $money>0) {
+        if (count($goods_ids) > 0  && count($goods_nums) > 0 && count($idarrs) == count($noarrs) && $user > 0 && $addressId > 0 && $money > 0) {
             $userAddress = DB::table('user_address')
                 ->select('address_id','consignee','country','province','city','district','address','zipcode','tel','mobile','email','sign_building')
                 ->where('address_id',$addressId)
                 ->where('user_id',$user)
                 ->first();
+            
             if ($userAddress) {
                 $oid = DB::table('order_info')->insertGetId(
                     [   'order_sn'      => $order_sn,
@@ -368,6 +365,7 @@ class Order
 
     //生成订单编号
     private function buildOrderNo($type){
+        date_default_timezone_set('PRC'); //设置中国时区 
         return $type.date('Ymd').mt_rand(10,99).substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 3).mt_rand(100,999);
     }
 
@@ -398,8 +396,8 @@ switch ($act) {
     case 'delete_cart':
         $Order->delete_cart($request);
         break;
-    case 'addOrder':
-        $Order->addOrder($request);
+    case 'add_order':
+        $Order->add_order($request);
         break;
     case 'get_order_lists':
         $Order->get_order_lists($request);
