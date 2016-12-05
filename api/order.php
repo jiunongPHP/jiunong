@@ -87,18 +87,16 @@ class Order
         $user = $request->input('user') ? $request->input('user') : 0;
         if ($user > 0) {
             $carts = DB::table('cart')
-                ->leftjoin('goods','cart.goods_id','=','goods.goods_id')
-                ->where('cart.is_real', 1)
-                ->where('cart.user_id', $user)
-                ->select('cart.goods_id','goods.cat_id','cart.goods_sn','cart.goods_name','cart.goods_number','cart.market_price','cart.goods_price')
+                ->where('is_real', 1)
+                ->where('user_id', $user)
+                ->select('goods_id','goods_sn','goods_name','goods_number','market_price','goods_price')
                 ->get();
- 
+            //print_r($goods);
             if ($carts) {
-                $data = array();
+                $data = [];
                 foreach($carts as $cart){
-                    $data[$cart->cat_id][] = $cart;
+                    $data[] = $cart;
                 }
- 
                 if(count($data)>0){
                     $res['errcode'] = '200';
                     $res['message'] = '获取购物车信息成功！';
