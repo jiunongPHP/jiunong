@@ -37,7 +37,7 @@ class wxpay_api{
     }
     
     /**
-     * 微信统一下单接口
+     * 微信支付统一下单接口
      * @param Request
      */
     function create_wxpay_order(Request $request){
@@ -88,7 +88,9 @@ class wxpay_api{
         $return_json_datas = json_encode($return_datas);
         
         $log_id = DB::table('wxpay_alipay_log')->insertGetId(
-                    [   'function_name'      => $function_name,
+                    [   
+                        'pay_type' => '1',
+                        'function_name'      => $function_name,
                         'send_json_data'       => $send_json_datas,
                         'return_json_data'     => $return_json_datas,
                         'send_time'       => $send_time,
