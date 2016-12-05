@@ -56,7 +56,7 @@ class wxpay_api{
         if(count($order_info) < 1){ return $this->return_a_error_info('2003', '没有找到订单，请核对信息！');}
         
         //发送订单回调url
-        $notify_url = 'http://www.jiunonghuabao.com/api/recive_wxpay_return.php';
+        $notify_url = 'https://www.jiunonghuabao.com/api/recive_wxpay_return.php';
         //发送到微信时间
         $send_time = time();
         
