@@ -1,5 +1,6 @@
 /data/config.php
 /images
+/temp/caches
 /temp/compiled
 /api/aip_init.php
 /api/composer.lock

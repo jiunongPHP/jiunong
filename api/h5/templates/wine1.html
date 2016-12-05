@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>活动</title>
+		<link rel="stylesheet" type="text/css" href="/api/h5/css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="/api/h5/css/css.css"/>
+		<script src="/api/h5/js/jQuery%20v1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<img width="100%" class="leftt" src="/api/h5/img/banner.png" alt="" />
+		<div class="wine_1" style="padding-bottom: 20px">
+			<p>{$data->description}</p>
+			<p>{$data->content}</p>
+			<h2>动态简介</h2>
+			<div class="wine_1_div">主题：{$data->title}</div>
+			<div class="wine_1_div">日期和时间：{$data->date_range} {$data->time_range}</div>
+			<div class="wine_1_div">预计时长：{$data->time_range}</div>
+			<div class="wine_1_div">参与人数：{$data->num}人</div>
+			<div class="wine_1_div">主办方：{$data->sponsor}</div>
+			<div class="wine_1_div">活动地点：{$data->address}</div>
+		</div>
+		<!--弹框-->
+		<script src="/api/h5/js/js.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>
