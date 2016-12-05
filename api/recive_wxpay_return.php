@@ -20,12 +20,12 @@ use Illuminate\Http\Request;
 //捕获输入信息
 //$request = Request::capture();
 
-$log_id = DB::table('wxpay_alipay_log')->update(
+$log_id = DB::table('wxpay_alipay_log')->where('log_id','1')
+            ->update(
                     [   
                         'wx_return_code'       => 123,
                         'return_json_data'     => json_encode($_POST),
                         'return_time'       => time(),
                     ]
-                )
-        ->where('log_id','1');
+                );
         
